@@ -3,7 +3,7 @@
 
 # happy everyday <small>3.5</small>
 
-> 一个神奇的文档网站生成器。
+> 佛系少年笔记
 
 [comment]: <> (- 简单、轻便 &#40;压缩后 ~21kB&#41;)
 
