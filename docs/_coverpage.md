@@ -1,4 +1,4 @@
-![logo](cc.jpg)
+![logo](dog.jpg)
 
 
 # happy everyday <small>3.5</small>
