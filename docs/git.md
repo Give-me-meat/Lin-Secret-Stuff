@@ -39,6 +39,9 @@ git pull git-demo master
 git clone git-demo master
 #查看远程库地址
 git remote -v
+#生成秘钥
+ssh-keygen -t rsa -C "15852907568@163.com"
+ssh-agent -s
 ```
 
 
