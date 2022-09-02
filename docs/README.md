@@ -1,6 +1,6 @@
 # 导航栏
 
-> good good study day day up ww
+> good good study day day up
 
 [>>kafka](kafka)
 
@@ -9,3 +9,7 @@
 [>>spark](spark面试问题.md)
 
 [>>git](git.md)
+
+[>>flink笔记](flink笔记.md)
+
+[>>面试](金林的大宝贝.md)
