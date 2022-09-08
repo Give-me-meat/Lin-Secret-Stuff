@@ -14,6 +14,6 @@
 
 [>>面试](金林的大宝贝.md)
 
-[>>hive](hive.md)
+[>>hive](Hive.md)
 
 [>>java](java面试题.md)
