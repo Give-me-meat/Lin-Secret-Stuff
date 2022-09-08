@@ -13,3 +13,7 @@
 [>>flink笔记](flink笔记.md)
 
 [>>面试](金林的大宝贝.md)
+
+[>>hive](hive.md)
+
+[>>java](java面试题.md)
