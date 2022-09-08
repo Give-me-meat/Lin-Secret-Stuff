@@ -7,3 +7,5 @@
 * [git笔记](git.md)
 * [flink笔记](flink笔记.md)
 * [面试准备](金林的大宝贝.md)
+* [hive笔记](hive.md)
+* [java笔记](java面试题.md)
