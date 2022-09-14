@@ -1223,6 +1223,10 @@ env.setStateBackend(new HashMapStateBackend());
 
 
 
+压测方式：kafka中积压数据，再开启fink消费，出现反压，就是处理瓶颈、也可以模拟数据
+
+
+
 # 容错机制
 
 ## 检查点的保存
@@ -2084,6 +2088,86 @@ create table if not exists dws_traffic_source_keyword_page_view_window
 ![1662108503463](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1662108503463.png)
 
 
+
+
+
+# 调优
+
+## 资源配置调优 
+
+- jobmanager内存：2G
+- taskmanager slot 数： container中cpu和slot的比例： 1：1    2个CPU 2个核
+- taskmanager：1个CPU4G内存，所以8G
+
+
+
+```shell
+bin/flink run \
+-t yarn-per-job \
+-d \
+-p 5 \ 指定并行度
+-Dyarn.application.queue=test \ 指定 yarn 队列
+-Djobmanager.memory.process.size=2048mb \ JM2~4G 足够
+-Dtaskmanager.memory.process.size=4096mb \ 单个 TM2~8G 足够
+-Dtaskmanager.numberOfTaskSlots=2 \ 与容器核数 1core：1slot 或 2core：1slot
+-c com.atguigu.flink.tuning.UvDemo \
+/opt/module/flink-1.13.1/myjar/flink-tuning-1.0-SNAPSHOT.jar
+```
+
+
+
+source的数据源端是kafka,Source的并行度设置为Kafka对应的topic分区数
+
+
+
+RocksDB  磁盘+内存的模式 能开启增量检查点
+
+
+
+## 反压
+
+![1663088811476](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1663088811476.png)
+
+
+
+定位：下游为绿，自己红的算子
+
+
+
+三种原因和解决方案
+
+资源不足：提高并行度、内存、加机器
+
+数据倾斜：只有个别Backpressure status为红,
+
+和第三方数据库交互：使用旁路缓存和异步IO解决
+
+
+
+
+
+## 数据倾斜
+
+现象：相同 Task 的多个 Subtask 中， 个别 Subtask 接收到的数据量明显大于其他Subtask 接收到的数据量，通过 Flink Web UI 可以精确地看到每个 Subtask 处理了多少数据，即可判断出 Flink 任务是否存在数据倾斜。通常，数据倾斜也会引起反压
+
+keyby之前数据倾斜：rebalance 重分区全局轮询，尽量在上游处理
+
+keyby之后数据倾斜
+
+- keyby后直接聚合（来一条处理一条）
+
+  - 两阶段聚合会导致数据重复计算，不准确，不采用
+  - 预聚合：定时器+状态(普通的算子状态)，采用，开窗聚合不行：会使用keyby
+
+- keyby后开窗聚合(一个窗口输出一条)
+
+  - 加随机数实现两阶段聚合，采用，
+    - 第一阶段key拼接随机数前缀，进行keyby开窗
+    - 第二阶段聚合：去掉随机数前缀，加上windowend(窗口结束时间)作为key
+
+  ![1663087797387](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1663087797387.png)
+
+  - 预聚合：会丢失原始的数据时间，时间语义就没了
 
 # 杂记
 
