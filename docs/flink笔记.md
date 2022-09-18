@@ -1,10 +1,10 @@
-# flink运行架构
+# **flink**运行架构
 
-![1660277392250](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660277392250.png)
+![1660277392250](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660277392250.png)
 
 三个组件
 
-- 客户端：负责作业的提交，将代码转化成数据流图，最后生成作业图
+- 客户端：负责**作业的提交**，将代码转化成数据流图，最后生成作业图
 - jobManager:Flink 集群中任务管理和调度的核心，是控制应用执行的主进程
 - TaskManager:工作进程,负责执行任务处理数据
 
@@ -14,7 +14,7 @@ JobManger 包含 3 个不同的组件
 
 * JobMaster
   * 负责处理单独的作业（Job），JobMaster和具体的 Job 是一一对应
-  * JobMaster 接收来自客户端的应用，接收到的信息包络jar包，数据流图（dataflow graph）和作业图（JobGraph）
+  * JobMaster 接收来自客户端的应用，接收到的信息包括jar包，数据流图（dataflow graph）和作业图（JobGraph）
   *  JobGraph 转换成一个物理层面的数据流图，也就是“执行图”，它包含了所有可以并发执行的任务，JobMaster会向ResourseManager发出请求，申请资源。获取到足够资源后，会将执行图分发到运行的TaskManager上
   * 负责中央协调操作，比如checkpoint
 * ResourceManager （资源管理器）
@@ -36,11 +36,9 @@ TaskManger
 
 ### 高层级抽象视角
 
-![1660279287823](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660279287823.png)
+![a1](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/a1.png)
 
-（1） 一般情况下，由客户端（App）通过分发器提供的 REST 接口，将作业提交给
-
-JobManager。
+（1） 一般情况下，由客户端（App）通过分发器提供的 REST 接口，将作业提交给JobManager。
 
 （2） 由分发器启动 JobMaster，并将作业（包含 JobGraph）提交给 JobMaster。
 
@@ -62,7 +60,7 @@ JobManager。
 
 ### Yarn Session提交流程
 
-![1660279809736](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660279809736.png)
+![1660279809736](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660279809736.png)
 
 （1） 客户端通过REST 接口，将作业提交给分发器。
 
@@ -86,7 +84,7 @@ JobManager。
 
 ### YARN per job模式
 
-![1660280176755](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660280176755.png)
+![1660280176755](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660280176755.png)
 
 （1） 客户端将作业提交给 YARN 的资源管理器，这一步中会同时将 Flink 的 Jar 包和配置上传到 HDFS，以便后续启动 Flink 相关组件的容器。
 
@@ -335,9 +333,9 @@ assignTimestampsAndWatermarks()方法需要传入一个 WatermarkStrategy 作为
 
 ## 窗口
 
-![1660317944622](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660317944622.png)
+![1660317944622](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660317944622.png)
 
-​							Flink 中的窗口“存储桶”示意
+Flink 中的窗口“存储桶”示意
 
 
 
@@ -408,7 +406,7 @@ stream.keyBy(<key selector>)
 
 重写的方法
 
-![1660392510635](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660392510635.png)
+![1660392510635](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660392510635.png)
 
 
 
@@ -547,7 +545,7 @@ KeyedProcessFunction可以实现定时器的功能
 
 processElement()
 
-![1660451216510](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660451216510.png)
+![1660451216510](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660451216510.png)
 
 用于“处理元素”，定义了处理的核心逻辑。这个方法对于流中的每个元素都会调用一次， 参数包括三个：输入数据值 value，上下文 ctx，以及“收集器”（Collector）out。方法没有返回值，处理之后的输出数据是通过收集器 out 来定义的
 
@@ -663,7 +661,7 @@ public class EventTimeTimerTest {
 
 ### 侧输出流
 
-![1660407610791](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660407610791.png)
+![1660407610791](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660407610791.png)
 
 
 
@@ -686,7 +684,7 @@ stream1.union(stream2, stream3, ...)
 
 ConnectedStreams(连接流)
 
-![1660408790463](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660408790463.png)
+![1660408790463](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660408790463.png)
 
 
 
@@ -745,7 +743,7 @@ out.collect(left + "," + right);
 
 
 
-![1660455713407](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660455713407.png)
+![1660455713407](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660455713407.png)
 
 特点：无需开窗
 
@@ -765,13 +763,13 @@ stream1.coGroup(stream2)
 
 FlatJoinFunction、JoinFunction和ProcessJoinFunction的区别
 
-![1660456702109](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660456702109.png)
+![1660456702109](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660456702109.png)
 
-![1660456733951](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660456733951.png)
+![1660456733951](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660456733951.png)
 
-![1660457038155](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660457038155.png)
+![1660457038155](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660457038155.png)
 
-![1660457228840](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660457228840.png)
+![1660457228840](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660457228840.png)
 
 FlatJoinFunction相比JoinFunction没有指定返回类型，使用收集器，更灵活，ProcessJoinFunction在此基础上多了上下文信息
 
@@ -843,9 +841,9 @@ windowjoin只能实现内连接，cogroup还可以实现外连接，更加通用
 
 指定状态分配器、状态名称、类型
 
-![1660476911262](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660476911262.png)
+![1660476911262](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660476911262.png)
 
-![1660476893521](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660476893521.png)
+![1660476893521](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660476893521.png)
 
 
 
@@ -869,7 +867,7 @@ TOPN  将每个key的聚合结果放入list当中进行排序
 
 一个优化的思路是直接在代码中调用.clear()方法去清除状态，但是有时候我们的逻辑要求不能直接清除。这时就需要配置一个状态的“生存时间”（time-to-live，TTL），当状态在内存中存在的时间超出这个值时，就将它清除
 
-![1660505101452](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660505101452.png)
+![1660505101452](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660505101452.png)
 
 
 
@@ -1163,11 +1161,11 @@ env.enableCheckpointing(10000L);
 
 检查点的保存离不开 JobManager 和 TaskManager，以及外部存储系统的协调。在应用进行检查点保存时，首先会由 JobManager 向所有 TaskManager 发出触发检查点的命令； TaskManger 收到之后，将当前任务的所有状态进行快照保存，持久化到远程的存储介质中； 完成之后向 JobManager 返回确认信息。这个过程是分布式的，当 JobManger 收到所有TaskManager 的返回信息后，就会确认当前检查点成功保存，如下图所示。而这一切工作的协调，就需要一个“专职人员”来完成。
 
+![1660547130950](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660547130950.png)
 
+   
 
-![1660547130950](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660547130950.png) 
-
-在 Flink 中，状态的存储、访问以及维护，都是由一个可插拔的组件决定的，这个组件就叫作状态后端（state backend）。状态后端主要负责两件事：一是本地的状态管理，二是将检查点（checkpoint）写入远程的持久化存储
+在 Flink 中，状态的存储、访问以及维护，都是由一个可插拔的组件决定的，这个组件就叫作状态后端（state backend）。状态后端主要负责两件事：**一是本地的状态管理，二是将检查点（checkpoint）写入远程的持久化存储**
 
 
 
@@ -1236,9 +1234,17 @@ env.setStateBackend(new HashMapStateBackend());
 
 
 
+checkpoint机制
+
+第1步：由Job Manager初始化Checkpoint，在数据源之后放一个barrier，以此为隔断
+
+第2步：将所有barrier下游的数据都计算完，并将CheckPoint的source、数据源的offset和最终计算的Result上报至State，存好
+
+一旦任务发生故障，重启任务，到State中读取所有任务元数据，重来一遍就好了。
+
 ### 检查点分界线
 
-![1660552245657](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660552245657.png)
+![1660552245657](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660552245657.png)
 
 watermark 指示的是“之前的数据全部到齐了”，而 barrier 指示的是“之前所有数据的状态更改保存入当前检查点”：它们都是一个“截止时间”的标志。
 
@@ -1250,7 +1256,7 @@ watermark 指示的是“之前的数据全部到齐了”，而 barrier 指示�
 
 ## 检查点配置
 
-![1660556495828](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660556495828.png)
+![1660556495828](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660556495828.png)
 
 
 
@@ -1403,7 +1409,7 @@ StreamExecutionEnvironment env=StreamExecutionEnvironment.getExecutionEnvironmen
 
 ## 创建表
 
-![1660598999085](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660598999085.png)
+![1660598999085](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660598999085.png)
 
 虚拟表
 
@@ -1533,7 +1539,7 @@ Flink 中的动态表，就借鉴了物化视图的思想。
 
 DDL 创建时间属性
 
-![1660648672560](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660648672560.png)
+![1660648672560](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660648672560.png)
 
 ```java
 // 方法一:
@@ -1752,13 +1758,13 @@ public class TimeAndWindowTest {
 
 广播从flinkcdc读取到的配置表，将数据写入dim层（flatmap、FlinkDCD、德鲁伊连接池、FlinkKafkaConsumer，广播流）
 
-![1660826207884](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660826207884.png)
+![1660826207884](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660826207884.png)
 
 ## dwd层 
 
 ### 日志表分流写入事实表（流量域）
 
-![1660821914261](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660821914261.png)
+![1660821914261](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660821914261.png)
 
 分流对日志数据进行拆分，生成五张事务事实表写入 Kafka
 
@@ -1770,7 +1776,7 @@ actions和display是json数组，需要遍历完进行输出
 
 日活(过滤页面数据中的独立访客访问记录)
 
-![1660878420012](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660878420012.png)
+![1660878420012](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660878420012.png)
 
 代码思路
 
@@ -1784,7 +1790,7 @@ actions和display是json数组，需要遍历完进行输出
 
 5. 使用状态编程实现按照Mid的去重（使用了**TTL**）
 
-   ![1660879420341](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660879420341.png)
+   ![1660879420341](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660879420341.png)
 
 6. 将数据写到Kafka
 
@@ -1799,7 +1805,7 @@ actions和display是json数组，需要遍历完进行输出
 
 ### 跳出事务事实表（流量域）
 
-![1660883297598](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660883297598.png)
+![1660883297598](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660883297598.png)
 
 
 
@@ -1815,23 +1821,23 @@ actions和display是json数组，需要遍历完进行输出
 
 5. 定义**CEP**的模式序列
 
-   ![1660885400069](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660885400069.png)
+   ![1660885400069](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660885400069.png)
 
 6. 将模式序列作用到流上
 
-   ![1660885599358](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660885599358.png)
+   ![1660885599358](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660885599358.png)
 
 7. 提取事件(匹配上的事件以及超时事件)
 
-   ![1660886285239](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660886285239.png)
+   ![1660886285239](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660886285239.png)
 
 8. 合并两个种事件
 
-   ![1660886308805](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660886308805.png)
+   ![1660886308805](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660886308805.png)
 
 9. 将数据写出到Kafka
 
-   ![1660886344342](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660886344342.png)
+   ![1660886344342](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660886344342.png)
 
 10. 启动任务
 
@@ -1848,7 +1854,7 @@ actions和display是json数组，需要遍历完进行输出
 
 需求：提取加购操作生成加购表，并将字典表中的相关维度退化到加购表中，写出到Kafka对应的主题
 
-![1660908860227](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660908860227.png)
+![1660908860227](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660908860227.png)
 
 代码思路
 
@@ -1860,7 +1866,7 @@ actions和display是json数组，需要遍历完进行输出
 
    data、old类型为**Map**
 
-   ![1660923617283](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660923617283.png)
+   ![1660923617283](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660923617283.png)
 
 3. 过滤出加购数据
 
@@ -1884,7 +1890,7 @@ actions和display是json数组，需要遍历完进行输出
 
 本节形成的预处理表中要保留订单表的 type 和 old 字段，用于过滤订单明细数据和取消订单明细数据
 
-![1660935306058](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660935306058.png)
+![1660935306058](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660935306058.png)
 
 
 
@@ -1917,9 +1923,9 @@ actions和display是json数组，需要遍历完进行输出
 
    因为用到left join 有撤回的操作，所以需要用到kafka upsert 连接器 他和kafka连接器的区别在于，需要主键
 
-   ![1660974057678](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660974057678.png)
+   ![1660974057678](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660974057678.png)
 
-   ![1660974025417](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660974025417.png)
+   ![21](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/21.png)
 
 10. 将数据写出
 
@@ -1931,7 +1937,7 @@ actions和display是json数组，需要遍历完进行输出
 
 从 Kafka 读取订单预处理表数据，筛选下单明细数据，写入 Kafka 对应主题
 
-![1661157987191](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1661157987191.png)
+![1661157987191](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1661157987191.png)
 
 
 
@@ -1939,7 +1945,7 @@ actions和display是json数组，需要遍历完进行输出
 
 ### 流量域来源关键词粒度页面浏览各窗口汇总表
 
-![1661106837036](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1661106837036.png)
+![1661106837036](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1661106837036.png)
 
 
 
@@ -1949,7 +1955,7 @@ actions和display是json数组，需要遍历完进行输出
 
 2. 使用DDL方式读取Kafka page_log 主题的数据创建表并且提取时间戳生成Watermark
 
-   ![1661108724248](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1661108724248.png)
+   ![1661108724248](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1661108724248.png)
 
    ```java
    //FROM_UNIXTIME  时间戳转日期
@@ -1960,15 +1966,15 @@ actions和display是json数组，需要遍历完进行输出
 
 4. 注册UDTF & 切词
 
-   ![1661109475558](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1661109475558.png)
+   ![1661109475558](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1661109475558.png)
 
 5. 分组、开窗、聚合
 
-   ![1661111779650](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1661111779650.png)
+   ![1661111779650](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1661111779650.png)
 
 6. 将动态表转换为流
 
-   ![1661111879309](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1661111879309.png)
+   ![1661111879309](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1661111879309.png)
 
 7. 将数据写出到ClickHouse
 
@@ -2025,7 +2031,7 @@ create table if not exists dws_traffic_source_keyword_page_view_window
 
 
 
-![1661151474856](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1661151474856.png)
+![1661151474856](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1661151474856.png)
 
 
 
@@ -2042,13 +2048,13 @@ create table if not exists dws_traffic_source_keyword_page_view_window
 
 
 
-![1662106474982](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1662106474982.png)
+![1662106474982](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1662106474982.png)
 
 
 
 ### 交易域用户-SPU粒度下单各窗口汇总表
 
-![1661167096745](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1661167096745.png)
+![1661167096745](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1661167096745.png)
 
 
 
@@ -2085,7 +2091,7 @@ create table if not exists dws_traffic_source_keyword_page_view_window
 
 
 
-![1662108503463](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1662108503463.png)
+![1662108503463](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1662108503463.png)
 
 
 
@@ -2126,7 +2132,7 @@ RocksDB  磁盘+内存的模式 能开启增量检查点
 
 ## 反压
 
-![1663088811476](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1663088811476.png)
+![1663088811476](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1663088811476.png)
 
 
 
@@ -2165,7 +2171,7 @@ keyby之后数据倾斜
     - 第一阶段key拼接随机数前缀，进行keyby开窗
     - 第二阶段聚合：去掉随机数前缀，加上windowend(窗口结束时间)作为key
 
-  ![1663087797387](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1663087797387.png)
+  ![1663087797387](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1663087797387.png)
 
   - 预聚合：会丢失原始的数据时间，时间语义就没了
 
@@ -2240,13 +2246,13 @@ The interval join currently only supports event time.
 
 时间语义为process time
 
-![1660903376407](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660903376407.png)
+![1660903376407](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660903376407.png)
 
 
 
 状态的保存 
 
-![1660905394161](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\1660905394161.png)
+![1660905394161](https://gitee.com/it-wont-work/typora-cloud-map-library/raw/master/img/1660905394161.png)
 
 
 
